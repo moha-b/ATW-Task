@@ -12,9 +12,13 @@ class PhotoInitial extends PhotoState {}
 class PhotoLoading extends PhotoState {}
 
 class PhotoSuccess extends PhotoState {
-  final PhotoModel photo;
+  final List<PhotoModel> photos;
 
-  const PhotoSuccess(this.photo);
+  const PhotoSuccess(this.photos);
 }
 
-class PhotoFailure extends PhotoState {}
+class PhotoFailure extends PhotoState {
+  final String message;
+
+  const PhotoFailure(this.message);
+}

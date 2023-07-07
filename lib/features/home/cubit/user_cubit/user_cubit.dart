@@ -12,7 +12,7 @@ class UserCubit extends Cubit<UserState> {
   Future<void> fetchUser() async {
     emit(UserLoading());
     var result = await repo.fetchUserData();
-    result.fold(
-        (failure) => emit(UserFailure()), (user) => emit(UserSuccess(user)));
+    result.fold((failure) => emit(UserFailure(failure.errorMessage)),
+        (user) => emit(UserSuccess(user)));
   }
 }

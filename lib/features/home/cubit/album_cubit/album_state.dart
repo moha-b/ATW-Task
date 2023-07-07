@@ -12,9 +12,13 @@ class AlbumInitial extends AlbumState {}
 class AlbumLoading extends AlbumState {}
 
 class AlbumSuccess extends AlbumState {
-  final AlbumModel album;
+  final List<AlbumModel> albums;
 
-  const AlbumSuccess(this.album);
+  const AlbumSuccess(this.albums);
 }
 
-class AlbumFailure extends AlbumState {}
+class AlbumFailure extends AlbumState {
+  final String message;
+
+  const AlbumFailure(this.message);
+}

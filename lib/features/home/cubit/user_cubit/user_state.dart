@@ -18,7 +18,7 @@ class UserSuccess extends UserState {
 }
 
 class UserFailure extends UserState {
-  // final String message;
-  //
-  // const UserFailure(this.message);
+  final String message;
+
+  const UserFailure(this.message);
 }

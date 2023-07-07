@@ -9,10 +9,13 @@ class PhotoCubit extends Cubit<PhotoState> {
   PhotoCubit(this.repo) : super(PhotoInitial());
 
   final HomeRepository repo;
-  Future<void> fetchUser(int albumId) async {
+
+  Future<void> fetchPhotos(int albumId) async {
     emit(PhotoLoading());
     var result = await repo.fetchAlbumsPhotos(albumId);
-    result.fold((failure) => emit(PhotoFailure()),
-        (photo) => emit(PhotoSuccess(photo)));
+    result.fold(
+      (failure) => emit(PhotoFailure(failure.errorMessage)),
+      (photos) => emit(PhotoSuccess(photos)),
+    );
   }
 }

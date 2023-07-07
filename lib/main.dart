@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:task/core/utils/size.dart';
 import 'package:task/features/home/view/home_view.dart';
 
+import 'core/services/locator_service.dart';
+
 void main() {
+  setupServiceLocator();
   runApp(const ATWTask());
 }
 

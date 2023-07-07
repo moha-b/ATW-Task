@@ -9,10 +9,13 @@ class AlbumCubit extends Cubit<AlbumState> {
   AlbumCubit(this.repo) : super(AlbumInitial());
 
   final HomeRepository repo;
-  Future<void> fetchUser(int userId) async {
+
+  Future<void> fetchAlbums(int userId) async {
     emit(AlbumLoading());
     var result = await repo.fetchUserAlbums(userId);
-    result.fold((failure) => emit(AlbumFailure()),
-        (album) => emit(AlbumSuccess(album)));
+    result.fold(
+      (failure) => emit(AlbumFailure(failure.errorMessage)),
+      (albums) => emit(AlbumSuccess(albums)),
+    );
   }
 }

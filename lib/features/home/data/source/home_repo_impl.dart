@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:task/core/errors/failure.dart';
 import 'package:task/core/services/api_service.dart';
 import 'package:task/features/home/data/model/home_models.dart';
@@ -12,30 +13,40 @@ class HomeRepoImpl extends HomeRepository {
   @override
   Future<Either<Failure, UserModel>> fetchUserData() async {
     try {
-      var data = await apiService.get(endPoint: '/users/2');
+      var data = await apiService.getMap(endPoint: '/users/2');
       return right(UserModel.fromJson(data));
     } catch (e) {
-      return Left(ServerFailure());
+      if (e is DioException) {
+        return left(ServerFailure(e.message.toString()));
+      }
+      return left(ServerFailure('Failed to fetch user data'));
     }
   }
 
   @override
-  Future<Either<Failure, AlbumModel>> fetchUserAlbums(int userId) async {
+  Future<Either<Failure, List<AlbumModel>>> fetchUserAlbums(int userId) async {
     try {
-      var data = await apiService.get(endPoint: '/users/$userId/albums');
-      return right(AlbumModel.fromJson(data));
+      var data = await apiService.getList(endPoint: '/users/$userId/albums');
+      return right(AlbumModel.from(data));
     } catch (e) {
-      return Left(ServerFailure());
+      if (e is DioException) {
+        return left(ServerFailure(e.message.toString()));
+      }
+      return left(ServerFailure('Failed to fetch user albums'));
     }
   }
 
   @override
-  Future<Either<Failure, PhotoModel>> fetchAlbumsPhotos(int albumId) async {
+  Future<Either<Failure, List<PhotoModel>>> fetchAlbumsPhotos(
+      int albumId) async {
     try {
-      var data = await apiService.get(endPoint: '/albums/$albumId/photos');
-      return right(PhotoModel.fromJson(data));
+      var data = await apiService.getList(endPoint: '/albums/$albumId/photos');
+      return right(PhotoModel.from(data));
     } catch (e) {
-      return Left(ServerFailure());
+      if (e is DioException) {
+        return left(ServerFailure(e.message.toString()));
+      }
+      return left(ServerFailure('Failed to fetch albums photos'));
     }
   }
 }
