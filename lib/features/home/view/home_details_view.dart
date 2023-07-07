@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task/core/services/locator_service.dart';
 import 'package:task/core/utils/styles.dart';
-import 'package:task/features/home/cubit/photo_cubit/photo_cubit.dart';
+import 'package:task/features/home/bloc/photo_bloc/photo_bloc.dart';
 import 'package:task/features/home/data/source/home_repo_impl.dart';
 import 'package:task/features/home/view/widgets/grid_view_widget.dart';
 
@@ -19,8 +19,8 @@ class HomeDetailScreen extends StatelessWidget {
       body: SafeArea(
         child: BlocProvider(
           create: (context) =>
-              PhotoCubit(locator.get<HomeRepoImpl>())..fetchPhotos(albumId),
-          child: BlocBuilder<PhotoCubit, PhotoState>(builder: (context, state) {
+              PhotoBloc(locator.get<HomeRepoImpl>())..add(GetPhoto(albumId)),
+          child: BlocBuilder<PhotoBloc, PhotoState>(builder: (context, state) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -29,7 +29,7 @@ class HomeDetailScreen extends StatelessWidget {
                   child: Text(albumTitle, style: AppStyles.titleStyle),
                 ),
                 Expanded(
-                  child: BlocBuilder<PhotoCubit, PhotoState>(
+                  child: BlocBuilder<PhotoBloc, PhotoState>(
                     builder: (context, state) {
                       if (state is PhotoSuccess) {
                         return BuildGridView(state: state);

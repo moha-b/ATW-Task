@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task/core/services/locator_service.dart';
-import 'package:task/features/home/cubit/album_cubit/album_cubit.dart';
+import 'package:task/features/home/bloc/album_bloc/album_bloc.dart';
 import 'package:task/features/home/data/source/home_repo_impl.dart';
 import 'package:task/features/home/view/home_details_view.dart';
 
@@ -15,9 +15,9 @@ class MyAlbumsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          AlbumCubit(locator.get<HomeRepoImpl>())..fetchAlbums(userId),
+          AlbumBloc(locator.get<HomeRepoImpl>())..add(GetAlbums(userId)),
       child: Expanded(
-        child: BlocBuilder<AlbumCubit, AlbumState>(
+        child: BlocBuilder<AlbumBloc, AlbumState>(
           builder: (context, state) {
             if (state is AlbumSuccess) {
               return buildAlbumList(state);

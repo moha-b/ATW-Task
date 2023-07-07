@@ -1,4 +1,4 @@
-part of 'album_cubit.dart';
+part of 'album_bloc.dart';
 
 abstract class AlbumState extends Equatable {
   const AlbumState();

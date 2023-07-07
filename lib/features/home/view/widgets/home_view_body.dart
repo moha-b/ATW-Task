@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task/core/utils/styles.dart';
-import 'package:task/features/home/cubit/user_cubit/user_cubit.dart';
+import 'package:task/features/home/bloc/user_bloc/user_bloc.dart';
 
 import 'my_albums_list_widget.dart';
 
@@ -12,7 +12,7 @@ class HomeViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UserCubit, UserState>(
+    return BlocBuilder<UserBloc, UserState>(
       builder: (context, state) {
         if (state is UserSuccess) {
           return Column(

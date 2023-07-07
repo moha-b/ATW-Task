@@ -1,4 +1,4 @@
-part of 'photo_cubit.dart';
+part of 'photo_bloc.dart';
 
 abstract class PhotoState extends Equatable {
   const PhotoState();
