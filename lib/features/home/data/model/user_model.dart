@@ -1,14 +1,14 @@
 import 'package:equatable/equatable.dart';
 
 class UserModel extends Equatable {
-  final int id;
-  final String name;
-  final Address address;
+  final int? id;
+  final String? name;
+  final Address? address;
 
   const UserModel({
-    required this.id,
-    required this.name,
-    required this.address,
+    this.id,
+    this.name,
+    this.address,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {

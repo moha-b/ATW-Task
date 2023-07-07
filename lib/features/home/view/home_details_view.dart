@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task/core/services/locator_service.dart';
+import 'package:task/core/utils/enums.dart';
 import 'package:task/core/utils/styles.dart';
-import 'package:task/features/home/bloc/photo_bloc/photo_bloc.dart';
-import 'package:task/features/home/data/source/home_repo_impl.dart';
+import 'package:task/features/home/bloc/home_bloc.dart';
 import 'package:task/features/home/view/widgets/grid_view_widget.dart';
 
 class HomeDetailScreen extends StatelessWidget {
@@ -15,35 +14,30 @@ class HomeDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<HomeBloc>(context).add(GetPhoto(albumId));
     return Scaffold(
       body: SafeArea(
-        child: BlocProvider(
-          create: (context) =>
-              PhotoBloc(locator.get<HomeRepoImpl>())..add(GetPhoto(albumId)),
-          child: BlocBuilder<PhotoBloc, PhotoState>(builder: (context, state) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Text(albumTitle, style: AppStyles.titleStyle),
-                ),
-                Expanded(
-                  child: BlocBuilder<PhotoBloc, PhotoState>(
-                    builder: (context, state) {
-                      if (state is PhotoSuccess) {
-                        return BuildGridView(state: state);
-                      } else if (state is PhotoFailure) {
-                        return Center(child: Text(state.message));
-                      } else {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                    },
-                  ),
-                )
-              ],
-            );
-          }),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(albumTitle, style: AppStyles.titleStyle),
+            ),
+            Expanded(
+              child: BlocBuilder<HomeBloc, HomeState>(
+                builder: (context, state) {
+                  if (state.state == DataState.Success) {
+                    return BuildGridView(state: state);
+                  } else if (state.state == DataState.Failure) {
+                    return Center(child: Text(state.message));
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
+            )
+          ],
         ),
       ),
     );

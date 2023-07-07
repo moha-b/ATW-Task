@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task/core/utils/enums.dart';
 import 'package:task/core/utils/styles.dart';
-import 'package:task/features/home/bloc/user_bloc/user_bloc.dart';
+import 'package:task/features/home/bloc/home_bloc.dart';
 
 import 'my_albums_list_widget.dart';
 
@@ -12,9 +13,9 @@ class HomeViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UserBloc, UserState>(
+    return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        if (state is UserSuccess) {
+        if (state.state == DataState.Success) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -24,7 +25,7 @@ class HomeViewBody extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                state.user.name,
+                state.user.name!,
                 style: AppStyles.titleStyle,
               ),
               buildAddressText(state),
@@ -33,10 +34,10 @@ class HomeViewBody extends StatelessWidget {
                 "My Albums",
                 style: AppStyles.titleStyle,
               ),
-              MyAlbumsList(userId: state.user.id),
+              MyAlbumsList(userId: state.user.id!),
             ],
           );
-        } else if (state is UserFailure) {
+        } else if (state.state == DataState.Failure) {
           return Center(child: Text(state.message));
         } else {
           return const Center(child: CircularProgressIndicator());
@@ -45,14 +46,14 @@ class HomeViewBody extends StatelessWidget {
     );
   }
 
-  Text buildAddressText(UserSuccess state) {
+  Text buildAddressText(HomeState state) {
     return Text.rich(
       TextSpan(
-        text: "${state.user.address.street}, ",
+        text: "${state.user.address?.street}, ",
         children: [
-          TextSpan(text: "${state.user.address.suite}, "),
-          TextSpan(text: "${state.user.address.city}\n"),
-          TextSpan(text: state.user.address.zipcode),
+          TextSpan(text: "${state.user.address?.suite}, "),
+          TextSpan(text: "${state.user.address?.city}\n"),
+          TextSpan(text: state.user.address?.zipcode),
         ],
       ),
     );
