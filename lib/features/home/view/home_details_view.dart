@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task/core/services/locator_service.dart';
+import 'package:task/core/utils/styles.dart';
 import 'package:task/features/home/cubit/photo_cubit/photo_cubit.dart';
 import 'package:task/features/home/data/source/home_repo_impl.dart';
+import 'package:task/features/home/view/widgets/grid_view_widget.dart';
 
 class HomeDetailScreen extends StatelessWidget {
   const HomeDetailScreen(
@@ -24,21 +26,13 @@ class HomeDetailScreen extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(16),
-                  child: Text(albumTitle),
+                  child: Text(albumTitle, style: AppStyles.titleStyle),
                 ),
                 Expanded(
                   child: BlocBuilder<PhotoCubit, PhotoState>(
                     builder: (context, state) {
                       if (state is PhotoSuccess) {
-                        return GridView.builder(
-                          itemCount: state.photos.length,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3),
-                          itemBuilder: (context, index) => Image.network(
-                            state.photos[index].thumbnailUrl,
-                          ),
-                        );
+                        return BuildGridView(state: state);
                       } else if (state is PhotoFailure) {
                         return Center(child: Text(state.message));
                       } else {
