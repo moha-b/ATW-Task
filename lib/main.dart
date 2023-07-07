@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home: ATWTask(),
+      home: const ATWTask(),
     );
   }
 }
