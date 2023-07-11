@@ -8,5 +8,8 @@ this task was implemented first with `cubit` in this [branch](https://github.com
 * Albums : GET /albums (userId as a parameter) 
 * Photos : GET /photos (albumId as a parameter) 
 
+
+
+# Screens
 <img width="200" align="left" src="screenshots/home-page.png"/>
 <img width="200" align="left" src="screenshots/detail-page.png"/>
