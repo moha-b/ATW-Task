@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "536125212713",
+    "project_id": "atw-task-e7b95",
+    "storage_bucket": "atw-task-e7b95.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536125212713:android:171ad0daa3cf9b249f7438",
+        "android_client_info": {
+          "package_name": "com.example.atw"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnh9-2EkMPx25jcSxmFe6wGA3nRSuiul4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
